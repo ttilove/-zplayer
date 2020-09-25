@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bo</title>
+    <style></style>
+</head>
+
+<body>
+    <div id="videodiv">
+        <video id="vd" controls="controls"></video>
+    </div>
+    <div class="su">
+        <input type="text" id="rate" />
+        <input type="button" value="ok" onclick="ratechange();" />
+        <input type="button" value="0.5x" onclick="ratechangetonum(0.5);" />
+        <input type="button" value="1x" onclick="ratechangetonum(1);" />
+        <input type="button" value="1.5x" onclick="ratechangetonum(1.5);" />
+        <input type="button" value="2x" onclick="ratechangetonum(2);" />
+        <input type="button" value="2.5x" onclick="ratechangetonum(2.5);" />
+        <input type="button" value="3x" onclick="ratechangetonum(3);" />
+    </div>
+</body>
+
+<script>
+    var vd = document.getElementById("vd");
+    var playrate = 1;
+
+    function ratechangetonum(num) {
+        playrate = num;
+        vd.playbackRate = playrate;
+        vd.play();
+    }
+    function ratechange() {
+        var rate = document.getElementById("rate");
+        ratechangetonum(rate.value);
+
+    }
+    function drag() {
+        var body = document.getElementsByTagName("body");
+        body[0].ondragover = function (ev) {
+            ev.preventDefault();
+        };
+        body[0].ondragleave = function (ev) {
+            ev.preventDefault();
+        };
+        body[0].ondrop = function (ev) {
+            ev.preventDefault();
+            var files = ev.dataTransfer.files;
+            vd.src = URL.createObjectURL(files[0]);
+            vd.playbackRate = playrate;
+            vd.play();
+        };
+    }
+    function style() {
+        var sw = 1000;
+        var vd = document.getElementById("vd");
+        vd.width = sw;
+        vd.height = 0.6 * sw;
+    }
+
+    style();
+    drag();
+</script>
+
+</html>
